@@ -142,7 +142,7 @@ namespace ImageExplorer
             double xjThreshold = (double)this.trackBar1.Value;
             var xjImageBinaryzation = GrayImg.CopyBlank();
             CvInvoke.Threshold(GrayImg, xjImageBinaryzation, xjThreshold, 255, ThresholdType.Binary);
-            //show picturebox
+            //show picturebox 
             this.pb1.Image = xjImageBinaryzation.ToBitmap();
         }
     }
