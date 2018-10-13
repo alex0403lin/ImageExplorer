@@ -37,12 +37,12 @@
             this.originalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.grayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.thresholdingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.averageHashToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.PHashToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.lblThresholding = new System.Windows.Forms.Label();
             this.trackBar1 = new System.Windows.Forms.TrackBar();
+            this.lblThresholding = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -97,7 +97,7 @@
             this.originalToolStripMenuItem,
             this.grayToolStripMenuItem,
             this.thresholdingToolStripMenuItem,
-            this.averageHashToolStripMenuItem});
+            this.PHashToolStripMenuItem});
             this.generateToolStripMenuItem.Name = "generateToolStripMenuItem";
             this.generateToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
             this.generateToolStripMenuItem.Text = "Generate";
@@ -105,29 +105,30 @@
             // originalToolStripMenuItem
             // 
             this.originalToolStripMenuItem.Name = "originalToolStripMenuItem";
-            this.originalToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.originalToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.originalToolStripMenuItem.Text = "Original";
             this.originalToolStripMenuItem.Click += new System.EventHandler(this.originalToolStripMenuItem_Click);
             // 
             // grayToolStripMenuItem
             // 
             this.grayToolStripMenuItem.Name = "grayToolStripMenuItem";
-            this.grayToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.grayToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.grayToolStripMenuItem.Text = "Gray";
             this.grayToolStripMenuItem.Click += new System.EventHandler(this.grayToolStripMenuItem_Click);
             // 
             // thresholdingToolStripMenuItem
             // 
             this.thresholdingToolStripMenuItem.Name = "thresholdingToolStripMenuItem";
-            this.thresholdingToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.thresholdingToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.thresholdingToolStripMenuItem.Text = "Thresholding";
             this.thresholdingToolStripMenuItem.Click += new System.EventHandler(this.thresholdingToolStripMenuItem_Click);
             // 
-            // averageHashToolStripMenuItem
+            // PHashToolStripMenuItem
             // 
-            this.averageHashToolStripMenuItem.Name = "averageHashToolStripMenuItem";
-            this.averageHashToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.averageHashToolStripMenuItem.Text = "Average Hash";
+            this.PHashToolStripMenuItem.Name = "PHashToolStripMenuItem";
+            this.PHashToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.PHashToolStripMenuItem.Text = "PHash";
+            this.PHashToolStripMenuItem.Click += new System.EventHandler(this.PHashToolStripMenuItem_Click);
             // 
             // statusStrip1
             // 
@@ -156,16 +157,6 @@
             this.panel1.Size = new System.Drawing.Size(596, 377);
             this.panel1.TabIndex = 8;
             // 
-            // lblThresholding
-            // 
-            this.lblThresholding.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblThresholding.AutoSize = true;
-            this.lblThresholding.Location = new System.Drawing.Point(467, 6);
-            this.lblThresholding.Name = "lblThresholding";
-            this.lblThresholding.Size = new System.Drawing.Size(109, 12);
-            this.lblThresholding.TabIndex = 10;
-            this.lblThresholding.Text = "Thresholding Value: 0";
-            // 
             // trackBar1
             // 
             this.trackBar1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -177,6 +168,16 @@
             this.trackBar1.Size = new System.Drawing.Size(104, 45);
             this.trackBar1.TabIndex = 11;
             this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
+            // 
+            // lblThresholding
+            // 
+            this.lblThresholding.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblThresholding.AutoSize = true;
+            this.lblThresholding.Location = new System.Drawing.Point(467, 6);
+            this.lblThresholding.Name = "lblThresholding";
+            this.lblThresholding.Size = new System.Drawing.Size(109, 12);
+            this.lblThresholding.TabIndex = 10;
+            this.lblThresholding.Text = "Thresholding Value: 0";
             // 
             // SimpleImage
             // 
@@ -208,7 +209,7 @@
         private System.Windows.Forms.ToolStripMenuItem generateToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem originalToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem grayToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem averageHashToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem PHashToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem thresholdingToolStripMenuItem;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;

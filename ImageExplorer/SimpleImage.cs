@@ -10,6 +10,8 @@ using System.Windows.Forms;
 using Emgu.CV;
 using Emgu.CV.Structure;
 using Emgu.CV.CvEnum;
+using Emgu.CV.ImgHash;
+using System.Runtime.InteropServices;
 
 namespace ImageExplorer
 {
@@ -127,9 +129,16 @@ namespace ImageExplorer
 
         private void thresholdingToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            trackBar1.Show();
+            if (pb1.Image != null)
+            {
+                trackBar1.Show();
             lblThresholding.Show();
             f1.Size = new Size(pb1.Image.Width + 150, pb1.Image.Height + 100);
+            }
+            else
+            {
+                MessageBox.Show("Please open the image.", "Please");
+            }
         }
 
         private void trackBar1_Scroll(object sender, EventArgs e)
@@ -144,6 +153,23 @@ namespace ImageExplorer
             CvInvoke.Threshold(GrayImg, xjImageBinaryzation, xjThreshold, 255, ThresholdType.Binary);
             //show picturebox 
             this.pb1.Image = xjImageBinaryzation.ToBitmap();
+        }
+
+        private void PHashToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var alg = new PHash();
+            var hashResult = new Mat();
+            //Compute the hash
+            alg.Compute(ImgInput, hashResult);
+
+            // Get the data from the unmanage memeory
+            var data = new byte[hashResult.Width * hashResult.Height];
+            Marshal.Copy(hashResult.DataPointer, data, 0, hashResult.Width * hashResult.Height);
+
+            // Concatenate the Hex values representation
+            var hashHex = BitConverter.ToString(data).Replace("-", string.Empty);
+            // hashHex has the hex values concatenation as string;
+            toolStripStatusLabel1.Text = "PHash: " + hashHex;
         }
     }
 }
