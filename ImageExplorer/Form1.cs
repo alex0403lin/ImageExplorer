@@ -10,11 +10,17 @@ using System.Windows.Forms;
 
 namespace ImageExplorer
 {
-    public partial class Form1 : Form
+    public partial class Form1 : System.Windows.Forms.Form
     {
+
+        SimpleImage si; 
         public Form1()
         {
             InitializeComponent();
+            si = new SimpleImage(this);
+            si.Dock = DockStyle.Fill;
+            panel1.Controls.Add(si);
         }
+
     }
 }
