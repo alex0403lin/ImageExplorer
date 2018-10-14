@@ -43,6 +43,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.trackBar1 = new System.Windows.Forms.TrackBar();
             this.lblThresholding = new System.Windows.Forms.Label();
+            this.pHashCompareToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -97,7 +98,8 @@
             this.originalToolStripMenuItem,
             this.grayToolStripMenuItem,
             this.thresholdingToolStripMenuItem,
-            this.PHashToolStripMenuItem});
+            this.PHashToolStripMenuItem,
+            this.pHashCompareToolStripMenuItem});
             this.generateToolStripMenuItem.Name = "generateToolStripMenuItem";
             this.generateToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
             this.generateToolStripMenuItem.Text = "Generate";
@@ -179,6 +181,13 @@
             this.lblThresholding.TabIndex = 10;
             this.lblThresholding.Text = "Thresholding Value: 0";
             // 
+            // pHashCompareToolStripMenuItem
+            // 
+            this.pHashCompareToolStripMenuItem.Name = "pHashCompareToolStripMenuItem";
+            this.pHashCompareToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.pHashCompareToolStripMenuItem.Text = "PHash Compare";
+            this.pHashCompareToolStripMenuItem.Click += new System.EventHandler(this.pHashCompareToolStripMenuItem_Click);
+            // 
             // SimpleImage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -217,5 +226,6 @@
         private System.Windows.Forms.ToolStripMenuItem dropToolStripMenuItem;
         private System.Windows.Forms.Label lblThresholding;
         private System.Windows.Forms.TrackBar trackBar1;
+        private System.Windows.Forms.ToolStripMenuItem pHashCompareToolStripMenuItem;
     }
 }

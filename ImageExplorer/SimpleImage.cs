@@ -21,7 +21,8 @@ namespace ImageExplorer
         OpenFileDialog ofd = new OpenFileDialog();
         SaveFileDialog sfd = new SaveFileDialog();
         Form1 f1;
-        PictureBox pb1;
+        PictureBox pb1 = new PictureBox();
+        bool isPHashCompare;
         public SimpleImage(Form1 form1)
         {
             InitializeComponent();
@@ -31,25 +32,24 @@ namespace ImageExplorer
 
         private void setIntilControl()
         {
-            pb1 = new PictureBox();
+            panelRomoveControls();
             pb1.SizeMode = PictureBoxSizeMode.AutoSize;
             panel1.Controls.Add(pb1);
-            trackBar1.Hide();
-            lblThresholding.Hide();
+            hideThresholdingControls();
 
         }
 
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (isPHashCompare)
+            {
+                setIntilControl();
+            }
             if (ofd.ShowDialog() == DialogResult.OK)
             {
-                ImgInput = new Image<Bgra, byte>(ofd.FileName);
-                toolStripStatusLabel1.Text = "Image Path: " + ofd.FileName;
-                pb1.Image = ImgInput.Bitmap;
-                f1.Size = new Size(pb1.Image.Width+50, pb1.Image.Height + 100);
-                trackBar1.Hide();
-                lblThresholding.Hide();
+                originalImage();
+                hideThresholdingControls();
             }
         }
 
@@ -58,6 +58,10 @@ namespace ImageExplorer
             sfd.Filter = "JPeg Image|*.jpg|Bitmap Image|*.bmp|Gif Image|*.gif|Png Image|*.png";
             sfd.Title = "Save an Image File";
             sfd.FileName = "Image";
+            if (isPHashCompare)
+            {
+                setIntilControl();
+            }
             if (pb1.Image != null)
             {
                 if (sfd.ShowDialog() == DialogResult.OK)
@@ -89,14 +93,13 @@ namespace ImageExplorer
 
         private void originalToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (isPHashCompare)
+            {
+                setIntilControl();
+            }
             if (pb1.Image != null)
             {
-                ImgInput = new Image<Bgra, byte>(ofd.FileName);
-                toolStripStatusLabel1.Text = "Image Path: " + ofd.FileName;
-                pb1.Image = ImgInput.Bitmap;
-                f1.Size = new Size(pb1.Image.Width + 50, pb1.Image.Height + 100);
-                trackBar1.Hide();
-                lblThresholding.Hide();
+                originalImage();
             }
             else
             {
@@ -108,18 +111,20 @@ namespace ImageExplorer
         private void dropToolStripMenuItem_Click(object sender, EventArgs e)
         {
             pb1.Image = null;
-            trackBar1.Hide();
-            lblThresholding.Hide();
+            hideThresholdingControls();
         }
 
         private void grayToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (isPHashCompare)
+            {
+                setIntilControl();
+            }
             if (pb1.Image != null)
             {
                 Image<Gray, Byte> grayImg = new Image<Gray, byte>(ImgInput.Bitmap);
                 pb1.Image = grayImg.ToBitmap();
-                trackBar1.Hide();
-                lblThresholding.Hide();
+                hideThresholdingControls();
             }
             else
             {
@@ -129,11 +134,14 @@ namespace ImageExplorer
 
         private void thresholdingToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (isPHashCompare)
+            {
+                setIntilControl();
+            }
             if (pb1.Image != null)
             {
-                trackBar1.Show();
-            lblThresholding.Show();
-            f1.Size = new Size(pb1.Image.Width + 150, pb1.Image.Height + 100);
+                showThresholdingControls();
+                f1.Size = new Size(pb1.Image.Width + 150, pb1.Image.Height + 100);
             }
             else
             {
@@ -157,19 +165,67 @@ namespace ImageExplorer
 
         private void PHashToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var alg = new PHash();
-            var hashResult = new Mat();
-            //Compute the hash
-            alg.Compute(ImgInput, hashResult);
+            if (isPHashCompare)
+            {
+                setIntilControl();
+            }
+            if (pb1.Image != null )
+            {
+                originalImage();
+                var alg = new PHash();
+                var hashResult = new Mat();
+                //Compute the hash
+                alg.Compute(ImgInput, hashResult);
+        
+                // Get the data from the unmanage memeory
+                var data = new byte[hashResult.Width * hashResult.Height];
+                Marshal.Copy(hashResult.DataPointer, data, 0, hashResult.Width * hashResult.Height);
 
-            // Get the data from the unmanage memeory
-            var data = new byte[hashResult.Width * hashResult.Height];
-            Marshal.Copy(hashResult.DataPointer, data, 0, hashResult.Width * hashResult.Height);
+                // Concatenate the Hex values representation
+                var hashHex = BitConverter.ToString(data).Replace("-", string.Empty);
+                // hashHex has the hex values concatenation as string;
+                toolStripStatusLabel1.Text = "PHash: " + hashHex;
+                hideThresholdingControls();
+            }
+            else
+            {
+                MessageBox.Show("Please open the image.", "Please");
+            }
+        }
 
-            // Concatenate the Hex values representation
-            var hashHex = BitConverter.ToString(data).Replace("-", string.Empty);
-            // hashHex has the hex values concatenation as string;
-            toolStripStatusLabel1.Text = "PHash: " + hashHex;
+        private void originalImage()
+        {
+            ImgInput = new Image<Bgra, byte>(ofd.FileName);
+            toolStripStatusLabel1.Text = "Image Path: " + ofd.FileName;
+            pb1.Image = ImgInput.Bitmap;
+            f1.Size = new Size(pb1.Image.Width + 50, pb1.Image.Height + 100);
+        }
+
+        private void hideThresholdingControls()
+        {
+            trackBar1.Hide();
+            lblThresholding.Hide();
+        }
+
+        private void showThresholdingControls()
+        {
+            trackBar1.Show();
+            lblThresholding.Show();
+        }
+
+        private void panelRomoveControls()
+        {
+            panel1.Controls.Clear();
+        }
+
+        private void pHashCompareToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            panelRomoveControls();
+            PHashCompare phc = new PHashCompare();
+            phc.Dock = DockStyle.Fill;
+            panel1.Controls.Add(phc);
+            f1.Size = new Size(500, 500);
+            isPHashCompare = true;
         }
     }
 }
